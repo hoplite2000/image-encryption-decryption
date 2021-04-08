@@ -18,7 +18,7 @@ pix = img.load()
 m = img.size[0]
 n = img.size[1]
 
-#Obtaining the RGB matrices
+#obtain the RGB matrices
 r = []
 g = []
 b = []
@@ -32,7 +32,7 @@ for i in range(m):
         g[i].append(rgbPerPixel[1])
         b[i].append(rgbPerPixel[2])
 
-# Vectors Kr and Kc
+#vectors Kr and Kc
 alpha = 8
 Kr = [randint(0,pow(2,alpha)-1) for i in range(m)]
 Kc = [randint(0,pow(2,alpha)-1) for i in range(n)]
@@ -51,7 +51,7 @@ f.write(str(ITER_MAX) + '\n')
 #encrypt
 for iterations in range(ITER_MAX):
 
-    # For each row
+    #for each row
     for i in range(m):
         rTotalSum = sum(r[i])
         gTotalSum = sum(g[i])
@@ -72,7 +72,7 @@ for iterations in range(ITER_MAX):
         else:
             b[i] = np.roll(b[i],-Kr[i])
 
-    # For each column
+    #for each column
     for i in range(n):
         rTotalSum = 0
         gTotalSum = 0
@@ -97,7 +97,7 @@ for iterations in range(ITER_MAX):
         else:
             downshift(b,i,Kc[i])
 
-    # For each row
+    #for each row
     for i in range(m):
         for j in range(n):
             if i%2==1:
@@ -109,7 +109,7 @@ for iterations in range(ITER_MAX):
                 g[i][j] = g[i][j] ^ rotate180(Kc[j])
                 b[i][j] = b[i][j] ^ rotate180(Kc[j])
 
-    # For each column
+    #for each column
     for j in range(n):
         for i in range(m):
             if j%2==0:
@@ -130,10 +130,10 @@ if not os.path.exists('encrypted_images'):
     os.makedirs('encrypted_images')
 img.save('encrypted_images/' + os.path.basename(src))
 
-print('-----------------------------------------------')
+print('------------------------------------------------------------------')
 print()
-print('Image Encrypted')
+print('Image Encrypted...')
 print('Encrypted Image saved at encrypted_images/' + os.path.basename(src))
 print('Keys are stored in keys.txt')
 print()
-print('-----------------------------------------------')
+print('------------------------------------------------------------------')
